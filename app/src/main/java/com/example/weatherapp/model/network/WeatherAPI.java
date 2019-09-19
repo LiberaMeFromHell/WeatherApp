@@ -14,9 +14,9 @@ import retrofit2.http.GET;
 public interface WeatherAPI {
 
     @GET
-    Call<List<Location>> getLocation(String apiKey,String queue, @Nullable String language);
+    Call<List<Location>> getLocation(String apiKey,String queue);
     @GET
-    Call<List<CurrentCondition>> getCurrentCondition(String apiKey, @Nullable Boolean details,@Nullable String language);
+    Call<CurrentCondition> getCurrentCondition(String apiKey, @Nullable Boolean details);
     @GET
-    Call<Forecast> getForecast(String apiKey, @Nullable Boolean details, @Nullable String language, @Nullable Boolean metrics);
+    Call<Forecast> getForecast(String apiKey, @Nullable Boolean details, @Nullable Boolean metrics);
 }

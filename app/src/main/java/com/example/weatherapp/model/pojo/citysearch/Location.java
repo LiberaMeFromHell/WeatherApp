@@ -1,8 +1,11 @@
 package com.example.weatherapp.model.pojo.citysearch;
 
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Location {
 
     @SerializedName("Version")
@@ -10,7 +13,7 @@ public class Location {
     private Integer version;
     @SerializedName("Key")
     @Expose
-    private String key;
+    private String stringKey;
     @SerializedName("Type")
     @Expose
     private String type;
@@ -36,11 +39,11 @@ public class Location {
     }
 
     public String getKey() {
-        return key;
+        return stringKey;
     }
 
     public void setKey(String key) {
-        this.key = key;
+        this.stringKey = key;
     }
 
     public String getType() {

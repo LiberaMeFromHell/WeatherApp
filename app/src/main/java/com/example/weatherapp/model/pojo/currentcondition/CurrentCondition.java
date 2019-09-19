@@ -1,8 +1,11 @@
 package com.example.weatherapp.model.pojo.currentcondition;
 
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class CurrentCondition {
 
     @SerializedName("LocalObservationDateTime")
@@ -29,6 +32,33 @@ public class CurrentCondition {
     @SerializedName("Temperature")
     @Expose
     private Temperature temperature;
+    @SerializedName("RealFeelTemperature")
+    @Expose
+    private RealFeelTemperature realFeelTemperature;
+    @SerializedName("RelativeHumidity")
+    @Expose
+    private Integer relativeHumidity;
+    @SerializedName("DewPoint")
+    @Expose
+    private DewPoint dewPoint;
+    @SerializedName("Wind")
+    @Expose
+    private Wind wind;
+    @SerializedName("UVIndex")
+    @Expose
+    private Integer uVIndex;
+    @SerializedName("UVIndexText")
+    @Expose
+    private String uVIndexText;
+    @SerializedName("ObstructionsToVisibility")
+    @Expose
+    private String obstructionsToVisibility;
+    @SerializedName("CloudCover")
+    @Expose
+    private Integer cloudCover;
+    @SerializedName("ApparentTemperature")
+    @Expose
+    private ApparentTemperature apparentTemperature;
     @SerializedName("MobileLink")
     @Expose
     private String mobileLink;
@@ -84,12 +114,12 @@ public class CurrentCondition {
         this.precipitationType = precipitationType;
     }
 
-    public Boolean getIsDayTime() {
+    public Boolean getDayTime() {
         return isDayTime;
     }
 
-    public void setIsDayTime(Boolean isDayTime) {
-        this.isDayTime = isDayTime;
+    public void setDayTime(Boolean dayTime) {
+        isDayTime = dayTime;
     }
 
     public Temperature getTemperature() {
@@ -98,6 +128,78 @@ public class CurrentCondition {
 
     public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
+    }
+
+    public RealFeelTemperature getRealFeelTemperature() {
+        return realFeelTemperature;
+    }
+
+    public void setRealFeelTemperature(RealFeelTemperature realFeelTemperature) {
+        this.realFeelTemperature = realFeelTemperature;
+    }
+
+    public Integer getRelativeHumidity() {
+        return relativeHumidity;
+    }
+
+    public void setRelativeHumidity(Integer relativeHumidity) {
+        this.relativeHumidity = relativeHumidity;
+    }
+
+    public DewPoint getDewPoint() {
+        return dewPoint;
+    }
+
+    public void setDewPoint(DewPoint dewPoint) {
+        this.dewPoint = dewPoint;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public void setWind(Wind wind) {
+        this.wind = wind;
+    }
+
+    public Integer getuVIndex() {
+        return uVIndex;
+    }
+
+    public void setuVIndex(Integer uVIndex) {
+        this.uVIndex = uVIndex;
+    }
+
+    public String getuVIndexText() {
+        return uVIndexText;
+    }
+
+    public void setuVIndexText(String uVIndexText) {
+        this.uVIndexText = uVIndexText;
+    }
+
+    public String getObstructionsToVisibility() {
+        return obstructionsToVisibility;
+    }
+
+    public void setObstructionsToVisibility(String obstructionsToVisibility) {
+        this.obstructionsToVisibility = obstructionsToVisibility;
+    }
+
+    public Integer getCloudCover() {
+        return cloudCover;
+    }
+
+    public void setCloudCover(Integer cloudCover) {
+        this.cloudCover = cloudCover;
+    }
+
+    public ApparentTemperature getApparentTemperature() {
+        return apparentTemperature;
+    }
+
+    public void setApparentTemperature(ApparentTemperature apparentTemperature) {
+        this.apparentTemperature = apparentTemperature;
     }
 
     public String getMobileLink() {
@@ -115,5 +217,4 @@ public class CurrentCondition {
     public void setLink(String link) {
         this.link = link;
     }
-
 }

@@ -3,8 +3,7 @@ package com.example.weatherapp.model.pojo.currentcondition;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Temperature {
-
+public class RealFeelTemperature {
     @SerializedName("Metric")
     @Expose
     private Metric metric;
