@@ -1,5 +1,6 @@
 package com.example.weatherapp.model.pojo.forecast;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
 
 import com.google.gson.annotations.Expose;
@@ -12,10 +13,15 @@ public class Forecast {
 
     @SerializedName("Headline")
     @Expose
+    @Embedded
     private Headline headline;
     @SerializedName("DailyForecasts")
     @Expose
+    @Embedded
     private List<DailyForecast> dailyForecasts = null;
+
+    public Forecast() {
+    }
 
     public Headline getHeadline() {
         return headline;

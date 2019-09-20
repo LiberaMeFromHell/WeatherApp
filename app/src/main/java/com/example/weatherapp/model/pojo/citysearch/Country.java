@@ -1,5 +1,7 @@
 package com.example.weatherapp.model.pojo.citysearch;
 
+import androidx.room.Embedded;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,6 +13,9 @@ public class Country {
     @SerializedName("LocalizedName")
     @Expose
     private String localizedName;
+
+    public Country() {
+    }
 
     public String getID() {
         return iD;

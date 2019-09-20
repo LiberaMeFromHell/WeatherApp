@@ -33,6 +33,9 @@ public class Headline {
     @Expose
     private String link;
 
+    public Headline() {
+    }
+
     public String getEffectiveDate() {
         return effectiveDate;
     }

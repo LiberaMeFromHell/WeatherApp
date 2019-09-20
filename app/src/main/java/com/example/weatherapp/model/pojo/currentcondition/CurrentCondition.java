@@ -1,6 +1,8 @@
 package com.example.weatherapp.model.pojo.currentcondition;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
 @Entity
 public class CurrentCondition {
 
+    @PrimaryKey(autoGenerate = true)
+    private int primaryKey;
     @SerializedName("LocalObservationDateTime")
     @Expose
     private String localObservationDateTime;
@@ -23,26 +27,27 @@ public class CurrentCondition {
     @SerializedName("HasPrecipitation")
     @Expose
     private Boolean hasPrecipitation;
-    @SerializedName("PrecipitationType")
-    @Expose
-    private Object precipitationType;
     @SerializedName("IsDayTime")
     @Expose
     private Boolean isDayTime;
     @SerializedName("Temperature")
     @Expose
+    @Embedded(prefix = "t_")
     private Temperature temperature;
     @SerializedName("RealFeelTemperature")
     @Expose
+    @Embedded(prefix = "rft_")
     private RealFeelTemperature realFeelTemperature;
     @SerializedName("RelativeHumidity")
     @Expose
     private Integer relativeHumidity;
     @SerializedName("DewPoint")
     @Expose
+    @Embedded(prefix = "dp_")
     private DewPoint dewPoint;
     @SerializedName("Wind")
     @Expose
+    @Embedded(prefix = "w_")
     private Wind wind;
     @SerializedName("UVIndex")
     @Expose
@@ -58,6 +63,7 @@ public class CurrentCondition {
     private Integer cloudCover;
     @SerializedName("ApparentTemperature")
     @Expose
+    @Embedded(prefix = "aT_")
     private ApparentTemperature apparentTemperature;
     @SerializedName("MobileLink")
     @Expose
@@ -65,6 +71,16 @@ public class CurrentCondition {
     @SerializedName("Link")
     @Expose
     private String link;
+
+    public CurrentCondition() {}
+
+    public int getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(int primaryKey) {
+        this.primaryKey = primaryKey;
+    }
 
     public String getLocalObservationDateTime() {
         return localObservationDateTime;
@@ -104,14 +120,6 @@ public class CurrentCondition {
 
     public void setHasPrecipitation(Boolean hasPrecipitation) {
         this.hasPrecipitation = hasPrecipitation;
-    }
-
-    public Object getPrecipitationType() {
-        return precipitationType;
-    }
-
-    public void setPrecipitationType(Object precipitationType) {
-        this.precipitationType = precipitationType;
     }
 
     public Boolean getDayTime() {

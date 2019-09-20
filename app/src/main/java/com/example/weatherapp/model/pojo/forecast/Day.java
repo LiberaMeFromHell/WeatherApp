@@ -21,6 +21,9 @@ public class Day {
     @Expose
     private String precipitationIntensity;
 
+    public Day() {
+    }
+
     public Integer getIcon() {
         return icon;
     }

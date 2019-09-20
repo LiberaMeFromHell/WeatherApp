@@ -1,14 +1,16 @@
 package com.example.weatherapp.model.pojo.forecast;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 @Entity
 public class DailyForecast {
+    @PrimaryKey(autoGenerate = true)
+    private int primaryKey;
     @SerializedName("Date")
     @Expose
     private String date;
@@ -17,22 +19,33 @@ public class DailyForecast {
     private Integer epochDate;
     @SerializedName("Temperature")
     @Expose
+    @Embedded
     private Temperature temperature;
     @SerializedName("Day")
     @Expose
+    @Embedded(prefix = "d_")
     private Day day;
     @SerializedName("Night")
     @Expose
+    @Embedded(prefix = "n_")
     private Night night;
-    @SerializedName("Sources")
-    @Expose
-    private List<String> sources = null;
     @SerializedName("MobileLink")
     @Expose
     private String mobileLink;
     @SerializedName("Link")
     @Expose
     private String link;
+
+    public DailyForecast() {
+    }
+
+    public int getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(int primaryKey) {
+        this.primaryKey = primaryKey;
+    }
 
     public String getDate() {
         return date;
@@ -72,14 +85,6 @@ public class DailyForecast {
 
     public void setNight(Night night) {
         this.night = night;
-    }
-
-    public List<String> getSources() {
-        return sources;
-    }
-
-    public void setSources(List<String> sources) {
-        this.sources = sources;
     }
 
     public String getMobileLink() {

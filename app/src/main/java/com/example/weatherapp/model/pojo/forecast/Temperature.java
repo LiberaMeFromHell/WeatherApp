@@ -1,5 +1,7 @@
 package com.example.weatherapp.model.pojo.forecast;
 
+import androidx.room.Embedded;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,10 +9,15 @@ public class Temperature {
 
     @SerializedName("Minimum")
     @Expose
+    @Embedded(prefix = "min_")
     private Minimum minimum;
     @SerializedName("Maximum")
     @Expose
+    @Embedded(prefix = "max_")
     private Maximum maximum;
+
+    public Temperature() {
+    }
 
     public Minimum getMinimum() {
         return minimum;

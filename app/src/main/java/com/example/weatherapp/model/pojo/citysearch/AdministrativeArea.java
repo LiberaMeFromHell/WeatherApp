@@ -11,6 +11,9 @@ public class AdministrativeArea {
     @Expose
     private String localizedName;
 
+    public AdministrativeArea() {
+    }
+
     public String getID() {
         return iD;
     }

@@ -8,15 +8,28 @@ import com.example.weatherapp.model.pojo.forecast.Forecast;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface WeatherAPI {
 
-    @GET
-    Call<List<Location>> getLocation(String apiKey,String queue);
-    @GET
-    Call<CurrentCondition> getCurrentCondition(String apiKey, @Nullable Boolean details);
-    @GET
-    Call<Forecast> getForecast(String apiKey, @Nullable Boolean details, @Nullable Boolean metrics);
+    @GET("locations/v1/cities/autocomplete")
+    Observable<List<Location>> getLocation(@Query("apiKey")String apiKey,
+                                           @Query("queue")String queue);
+
+    @GET("currentconditions/v1/295954/{locationKey}")
+    Observable<CurrentCondition> getCurrentCondition(@Query("apiKey")String apiKey,
+                                                     @Path ("locationKey")String locationKey,
+                                                     @Query("details") @Nullable Boolean details);
+
+    @GET("forecasts/v1/daily/5day/{locationKey}")
+    Observable<Forecast> getForecast(@Query("apiKey")String apiKey,
+                                     @Path ("locationKey")String locationKey,
+                                     @Query("details") @Nullable Boolean details,
+                                     @Query("metrics") @Nullable Boolean metrics);
+
+    //TODO: add compression @Header("Accept-Encoding: gzip,deflate")
 }

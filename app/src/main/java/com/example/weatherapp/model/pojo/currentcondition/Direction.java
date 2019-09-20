@@ -15,6 +15,9 @@ public class Direction {
     @Expose
     private String english;
 
+    public Direction() {
+    }
+
     public Integer getDegrees() {
         return degrees;
     }

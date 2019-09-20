@@ -15,6 +15,9 @@ public class Metric {
     @Expose
     private Integer unitType;
 
+    public Metric() {
+    }
+
     public Integer getValue() {
         return value;
     }

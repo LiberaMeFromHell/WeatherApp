@@ -1,6 +1,9 @@
 package com.example.weatherapp.model.pojo.citysearch;
 
+import androidx.annotation.NonNull;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,8 +14,10 @@ public class Location {
     @SerializedName("Version")
     @Expose
     private Integer version;
+    @PrimaryKey
     @SerializedName("Key")
     @Expose
+    @NonNull
     private String stringKey;
     @SerializedName("Type")
     @Expose
@@ -22,13 +27,19 @@ public class Location {
     private Integer rank;
     @SerializedName("LocalizedName")
     @Expose
+    @Embedded
     private String localizedName;
     @SerializedName("Country")
     @Expose
+    @Embedded(prefix = "c_")
     private Country country;
     @SerializedName("AdministrativeArea")
     @Expose
+    @Embedded(prefix = "a_")
     private AdministrativeArea administrativeArea;
+
+    public Location() {
+    }
 
     public Integer getVersion() {
         return version;
@@ -38,12 +49,12 @@ public class Location {
         this.version = version;
     }
 
-    public String getKey() {
+    public String getStringKey() {
         return stringKey;
     }
 
-    public void setKey(String key) {
-        this.stringKey = key;
+    public void setStringKey(String stringKey) {
+        this.stringKey = stringKey;
     }
 
     public String getType() {
@@ -85,5 +96,4 @@ public class Location {
     public void setAdministrativeArea(AdministrativeArea administrativeArea) {
         this.administrativeArea = administrativeArea;
     }
-
 }

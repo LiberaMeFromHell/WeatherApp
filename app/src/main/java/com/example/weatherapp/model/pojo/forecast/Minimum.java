@@ -15,6 +15,9 @@ public class Minimum {
     @Expose
     private Integer unitType;
 
+    public Minimum() {
+    }
+
     public Integer getValue() {
         return value;
     }

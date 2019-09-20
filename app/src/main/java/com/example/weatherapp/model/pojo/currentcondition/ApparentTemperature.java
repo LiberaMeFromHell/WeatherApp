@@ -1,5 +1,7 @@
 package com.example.weatherapp.model.pojo.currentcondition;
 
+import androidx.room.Embedded;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +9,11 @@ public class ApparentTemperature {
 
     @SerializedName("Metric")
     @Expose
+    @Embedded
     private Metric metric;
+
+    public ApparentTemperature() {
+    }
 
     public Metric getMetric() {
         return metric;

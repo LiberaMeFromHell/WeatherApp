@@ -1,16 +1,18 @@
 package com.example.weatherapp.model.network;
 
-import com.example.weatherapp.BuildConfig;
+import com.example.weatherapp.model.pojo.citysearch.Location;
 import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
 import com.example.weatherapp.model.pojo.forecast.DailyForecast;
 import com.example.weatherapp.model.pojo.forecast.Forecast;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataReceiver {
@@ -18,10 +20,11 @@ public class DataReceiver {
     private static DataReceiver dataReceiver;
     private WeatherAPI weatherAPI;
 
-    public DataReceiver() {
+    private DataReceiver() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://dataservice.accuweather.com/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         weatherAPI = retrofit.create(WeatherAPI.class);
     }
@@ -34,28 +37,22 @@ public class DataReceiver {
 
     }
 
-    public List<DailyForecast> downloadDailyForecast(String apiKey, String queue) {
-
-
-
-        weatherAPI.getForecast(apiKey,true,true).enqueue(new Callback<Forecast>() {
-             @Override
-             public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-
-             }
-
-             @Override
-             public void onFailure(Call<Forecast> call, Throwable t) {
-
-             }
-         });
+    public Observable<Forecast> getForecastObserver(String apiKey, String locationKey) {
+        return weatherAPI.getForecast(apiKey, locationKey,false,true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public CurrentCondition downloadCurrentCondition(String apiKey, String queue) {
-
+    public Observable<CurrentCondition> getCurrentConditionObservable(String apiKey, String locationKey) {
+        return weatherAPI.getCurrentCondition(apiKey, locationKey, true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Forecast downloadForecast(String apiKey, String queue) {
+    public Observable<List<Location>> getCityList(String apiKey, String queue) {
+        return weatherAPI.getLocation(apiKey,queue)
+                .subscribeOn(Schedulers.io())
+                .observeOn((AndroidSchedulers.mainThread()));
 
     }
 }

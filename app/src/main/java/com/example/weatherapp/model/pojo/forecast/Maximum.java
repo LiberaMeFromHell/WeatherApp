@@ -15,6 +15,9 @@ public class Maximum {
     @Expose
     private Integer unitType;
 
+    public Maximum() {
+    }
+
     public Integer getValue() {
         return value;
     }

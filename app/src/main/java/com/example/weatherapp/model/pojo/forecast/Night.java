@@ -21,6 +21,10 @@ public class Night {
     @Expose
     private String precipitationIntensity;
 
+
+    public Night() {
+    }
+
     public Integer getIcon() {
         return icon;
     }
