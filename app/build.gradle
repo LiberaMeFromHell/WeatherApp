@@ -12,8 +12,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "ApiKey", WeatherApp_ApiKey
+        }
         release {
-            buildConfigField 'String', "ApiKey", WeatherApp_ApiKey
+            buildConfigField "String", "ApiKey", WeatherApp_ApiKey
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

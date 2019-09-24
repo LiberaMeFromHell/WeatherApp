@@ -2,7 +2,6 @@ package com.example.weatherapp.model.network;
 
 import com.example.weatherapp.model.pojo.citysearch.Location;
 import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
-import com.example.weatherapp.model.pojo.forecast.DailyForecast;
 import com.example.weatherapp.model.pojo.forecast.Forecast;
 
 import java.util.List;

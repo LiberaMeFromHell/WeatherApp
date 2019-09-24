@@ -7,7 +7,7 @@
     tools:context=".view.CurrentConditionFragment">
 
     <ImageView
-        android:id="@+id/weatherIcon"
+        android:id="@+id/iconWeather"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
@@ -35,7 +35,7 @@
         android:layout_marginBottom="8dp"
         android:textColor="@color/colorTextPrimaryDark"
         android:textSize="@dimen/font_large"
-        app:layout_constraintBottom_toTopOf="@+id/WeatherText"
+        app:layout_constraintBottom_toTopOf="@+id/textWeather"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
@@ -75,13 +75,13 @@
         tools:text="6°" />
 
     <TextView
-        android:id="@+id/WeatherText"
+        android:id="@+id/textWeather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:textColor="@color/colorTextPrimaryDark"
         android:textSize="@dimen/font_normal"
-        app:layout_constraintBottom_toTopOf="@+id/RealFeelTemperature"
+        app:layout_constraintBottom_toTopOf="@+id/textRealFeelTemperature"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCurrentTemperatureAverage"
@@ -89,7 +89,7 @@
         tools:text="Sunny" />
 
     <TextView
-        android:id="@+id/RealFeelTemperature"
+        android:id="@+id/textRealFeelTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -100,59 +100,59 @@
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WeatherText"
+        app:layout_constraintTop_toBottomOf="@+id/textWeather"
         tools:text="Real feel 11°" />
 
     <ImageView
-        android:id="@+id/windIcon"
+        android:id="@+id/iconWind"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/windText"
+        app:layout_constraintEnd_toStartOf="@+id/textWind"
         app:layout_constraintStart_toEndOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/RealFeelTemperature" />
+        app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
     <ImageView
-        android:id="@+id/relativeHumidityIcon2"
+        android:id="@+id/iconRelativeHumidity"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/humidityText"
+        app:layout_constraintEnd_toStartOf="@+id/textHumidity"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RealFeelTemperature" />
+        app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
     <TextView
-        android:id="@+id/humidityText"
+        android:id="@+id/textHumidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="TextView"
+        tools:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/divider"
-        app:layout_constraintStart_toEndOf="@+id/relativeHumidityIcon2"
-        app:layout_constraintTop_toBottomOf="@+id/RealFeelTemperature" />
+        app:layout_constraintStart_toEndOf="@+id/iconRelativeHumidity"
+        app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
     <TextView
-        android:id="@+id/windText"
+        android:id="@+id/textWind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="TextView"
+        tools:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/windIcon"
-        app:layout_constraintTop_toBottomOf="@+id/RealFeelTemperature" />
+        app:layout_constraintStart_toEndOf="@+id/iconWind"
+        app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
     <View
         android:id="@+id/divider"
@@ -160,8 +160,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toStartOf="@+id/windIcon"
-        app:layout_constraintStart_toEndOf="@+id/humidityText"
-        app:layout_constraintTop_toBottomOf="@+id/RealFeelTemperature" />
+        app:layout_constraintEnd_toStartOf="@+id/iconWind"
+        app:layout_constraintStart_toEndOf="@+id/textHumidity"
+        app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

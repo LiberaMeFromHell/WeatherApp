@@ -170,19 +170,19 @@ public class CurrentCondition {
         this.wind = wind;
     }
 
-    public Integer getuVIndex() {
+    public Integer getUVIndex() {
         return uVIndex;
     }
 
-    public void setuVIndex(Integer uVIndex) {
+    public void setUVIndex(Integer uVIndex) {
         this.uVIndex = uVIndex;
     }
 
-    public String getuVIndexText() {
+    public String getUVIndexText() {
         return uVIndexText;
     }
 
-    public void setuVIndexText(String uVIndexText) {
+    public void setUVIndexText(String uVIndexText) {
         this.uVIndexText = uVIndexText;
     }
 
