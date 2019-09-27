@@ -20,13 +20,13 @@ public interface WeatherAPI {
                                            @Query("queue")String queue);
 
     @GET("currentconditions/v1/295954/{locationKey}")
-    Observable<CurrentCondition> getCurrentCondition(@Query("apiKey")String apiKey,
-                                                     @Path ("locationKey")String locationKey,
+    Observable<CurrentCondition> getCurrentCondition(@Path ("locationKey")String locationKey,
+                                                     @Query("apiKey")String apiKey,
                                                      @Query("details") @Nullable Boolean details);
 
     @GET("forecasts/v1/daily/5day/{locationKey}")
-    Observable<Forecast> getForecast(@Query("apiKey")String apiKey,
-                                     @Path ("locationKey")String locationKey,
+    Observable<Forecast> getForecast(@Path ("locationKey")String locationKey,
+                                     @Query("apiKey")String apiKey,
                                      @Query("details") @Nullable Boolean details,
                                      @Query("metrics") @Nullable Boolean metrics);
 

@@ -35,7 +35,7 @@ public class CurrentConditionFragment extends Fragment {
     private ImageView iconWind;
     private ImageView iconRelativeHumidity;
 
-    private CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class CurrentConditionFragment extends Fragment {
 
         iconWeather = view.findViewById(R.id.iconWeather);
         iconWind = view.findViewById(R.id.iconWind);
-        iconRelativeHumidity = view.findViewById(R.id.iconRelativeHumidity);
+        iconRelativeHumidity = view.findViewById(R.id.iconRelativeHumidity2);
 
         return view;
     }
