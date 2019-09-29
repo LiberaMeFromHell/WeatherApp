@@ -16,19 +16,19 @@ import retrofit2.http.Query;
 public interface WeatherAPI {
 
     @GET("locations/v1/cities/autocomplete")
-    Observable<List<Location>> getLocation(@Query("apiKey")String apiKey,
-                                           @Query("queue")String queue);
+    Observable<List<Location>> getLocation(@Query("apikey")String apiKey,
+                                           @Query("q")String queue);
 
-    @GET("currentconditions/v1/295954/{locationKey}")
-    Observable<CurrentCondition> getCurrentCondition(@Path ("locationKey")String locationKey,
-                                                     @Query("apiKey")String apiKey,
+    @GET("currentconditions/v1/{locationKey}")
+    Observable<List<CurrentCondition>> getCurrentCondition(@Path ("locationKey")String apiKey ,
+                                                     @Query("apikey")String locationKey,
                                                      @Query("details") @Nullable Boolean details);
 
     @GET("forecasts/v1/daily/5day/{locationKey}")
-    Observable<Forecast> getForecast(@Path ("locationKey")String locationKey,
-                                     @Query("apiKey")String apiKey,
+    Observable<Forecast> getForecast(@Path ("locationKey")String apiKey,
+                                     @Query("apikey")String locationKey,
                                      @Query("details") @Nullable Boolean details,
-                                     @Query("metrics") @Nullable Boolean metrics);
+                                     @Query("metric") @Nullable Boolean metric);
 
     //TODO: add compression @Header("Accept-Encoding: gzip,deflate")
 }

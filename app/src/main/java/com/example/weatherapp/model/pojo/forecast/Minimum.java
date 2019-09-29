@@ -7,7 +7,7 @@ public class Minimum {
 
     @SerializedName("Value")
     @Expose
-    private Integer value;
+    private Float value;
     @SerializedName("Unit")
     @Expose
     private String unit;
@@ -18,11 +18,11 @@ public class Minimum {
     public Minimum() {
     }
 
-    public Integer getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 

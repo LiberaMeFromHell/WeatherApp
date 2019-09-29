@@ -4,78 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".view.ForecastFragment"
-    android:elevation="2dp">
-
-    <TextView
-        android:id="@+id/textForecast1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider3"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/guideline9"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="Tuesday" />
-
-    <TextView
-        android:id="@+id/textForecast2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider4"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/divider3"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="Wednesday" />
-
-    <TextView
-        android:id="@+id/textForecast3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider5"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/divider4"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="Thursday" />
-
-    <TextView
-        android:id="@+id/textForecast4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/divider5"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="Friday" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="8dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="8dp" />
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+    tools:context=".view.ForecastFragment">
 
     <ImageView
         android:id="@+id/iconRelativeHumidity1"
@@ -110,16 +41,83 @@
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
-    <ImageView
-        android:id="@+id/iconRelativeHumidity4"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="96dp"
+    <TextView
+        android:id="@+id/textForecast1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/colorTextPrimaryDark"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toTopOf="@+id/divider3"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/divider5" />
+        app:layout_constraintTop_toTopOf="@+id/guideline9"
+        tools:text="Tuesday" />
+
+    <TextView
+        android:id="@+id/textForecast2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorTextPrimaryDark"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toTopOf="@+id/divider4"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/divider3"
+        tools:text="Wednesday" />
+
+    <TextView
+        android:id="@+id/textForecast3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorTextPrimaryDark"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toTopOf="@+id/divider5"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/divider4"
+        tools:text="Thursday" />
+
+    <TextView
+        android:id="@+id/textForecastTemperature1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/colorTextPrimaryDark"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toTopOf="@+id/divider3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline9"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/textForecastTemperature2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/colorTextPrimaryDark"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toTopOf="@+id/divider4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider3"
+        tools:text="6" />
+
+    <TextView
+        android:id="@+id/textForecastTemperature3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/colorTextPrimaryDark"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toTopOf="@+id/divider5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider4"
+        tools:text="1" />
 
     <View
         android:id="@+id/divider3"
@@ -131,7 +129,8 @@
         app:layout_constraintBottom_toTopOf="@+id/divider4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <View
         android:id="@+id/divider4"
@@ -157,52 +156,18 @@
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
-    <TextView
-        android:id="@+id/textForecastTemperature1"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="12" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp" />
 
-    <TextView
-        android:id="@+id/textForecastTemperature2"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="6" />
-
-    <TextView
-        android:id="@+id/textForecastTemperature3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider4"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="1" />
-
-    <TextView
-        android:id="@+id/textForecastTemperature4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider5"
-        android:textColor="@color/colorTextPrimaryDark"
-        android:textSize="@dimen/font_normal"
-        tools:text="11" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

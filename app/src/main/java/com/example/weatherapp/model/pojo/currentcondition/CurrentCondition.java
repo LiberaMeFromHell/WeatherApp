@@ -49,6 +49,10 @@ public class CurrentCondition {
     @Expose
     @Embedded(prefix = "w_")
     private Wind wind;
+    @SerializedName("TemperatureSummary")
+    @Expose
+    @Embedded
+    private TemperatureSummary temperatureSummary;
     @SerializedName("UVIndex")
     @Expose
     private Integer uVIndex;
@@ -104,6 +108,14 @@ public class CurrentCondition {
 
     public void setWeatherText(String weatherText) {
         this.weatherText = weatherText;
+    }
+
+    public TemperatureSummary getTemperatureSummary() {
+        return temperatureSummary;
+    }
+
+    public void setTemperatureSummary(TemperatureSummary temperatureSummary) {
+        this.temperatureSummary = temperatureSummary;
     }
 
     public Integer getWeatherIcon() {

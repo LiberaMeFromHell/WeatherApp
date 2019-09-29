@@ -1,11 +1,6 @@
 package com.example.weatherapp.view;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.weatherapp.BuildConfig;
 import com.example.weatherapp.R;
 import com.example.weatherapp.model.network.DataReceiver;
 import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
+
+import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -70,14 +71,17 @@ public class CurrentConditionFragment extends Fragment {
         String apiKey = BuildConfig.ApiKey;
         DataReceiver dataReceiver = DataReceiver.getInstance();
         compositeDisposable.add(
-                dataReceiver.getCurrentConditionObservable(apiKey, "295954")
-                        .subscribeWith(new DisposableObserver<CurrentCondition>() {
+                dataReceiver.getCurrentConditionObservable("295954",apiKey)
+                        .subscribeWith(new DisposableObserver<List<CurrentCondition>>() {
                             @Override
-                            public void onNext(CurrentCondition currentCondition) {
+                            public void onNext(List<CurrentCondition> currentCondition) {
+                                Log.d("tag", "onViewCreated");
+                                updateCurrentCondition(currentCondition.get(0));
                             }
 
                             @Override
                             public void onError(Throwable e) {
+                                Log.d("tag", "onError" + e);
 
                             }
 
@@ -98,5 +102,17 @@ public class CurrentConditionFragment extends Fragment {
         Log.d("tag", "RealFeel: "+ currentCondition.getRealFeelTemperature()
                 + ", Weather: "+ currentCondition.getWeatherText()
                 + ", Average temperature: "+ currentCondition.getTemperature().getMetric().getValue());
+
+        textCurrentTemperatureMax.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMaximum().getMetric().getValue().toString());
+        textCurrentTemperatureMin.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMinimum().getMetric().getValue().toString());;
+        textCurrentTemperatureAverage.setText(currentCondition.getTemperature().getMetric().getValue().toString());
+        textWeather.setText(currentCondition.getWeatherText());
+        textRealFeelTemperature.setText(currentCondition.getRealFeelTemperature().getMetric().getValue().toString());
+        //textHumidity.setText(currentCondition.getRelativeHumidity());
+        textWind.setText(currentCondition.getWind().getSpeed().getMetric().getValue().toString());
+
+        /*iconWeather;
+        iconWind;
+        iconRelativeHumidity;*/
     }
 }
