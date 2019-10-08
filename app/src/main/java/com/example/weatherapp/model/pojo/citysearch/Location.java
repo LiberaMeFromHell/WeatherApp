@@ -27,7 +27,6 @@ public class Location {
     private Integer rank;
     @SerializedName("LocalizedName")
     @Expose
-    @Embedded
     private String localizedName;
     @SerializedName("Country")
     @Expose

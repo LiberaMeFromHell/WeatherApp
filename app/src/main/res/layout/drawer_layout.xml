@@ -4,49 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:title="My locations"
-            app:titleTextColor="@color/colorTextPrimaryLight" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="My locations"
+        app:titleTextColor="@color/colorTextPrimaryLight" />
 
     <FrameLayout
 
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:elevation="8dp"
         android:background="@color/colorPrimaryLight"
-        android:clickable="true">
+        android:clickable="true"
+        android:elevation="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_content_start_primary"
+            android:clickable="false"
+            android:src="@drawable/baseline_add_white_36" />
 
         <TextView
             android:id="@+id/bottomFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_content_start_secondary"
+            android:gravity="center_vertical"
             android:padding="8dp"
             android:text="@string/string_add_location"
             android:textColor="@color/colorTextPrimaryLight"
-            android:textSize="@dimen/font_title"
-            android:gravity="center_vertical"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/margin_content_start_primary"
-            android:src="@drawable/baseline_add_white_36"
-            android:clickable="false"/>
+            android:textSize="@dimen/font_title" />
 
     </FrameLayout>
+
+    <ScrollView
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/drawerLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </FrameLayout>

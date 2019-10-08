@@ -66,7 +66,7 @@ public class ForecastFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String apiKey = BuildConfig.ApiKey;
-        DataReceiver dataReceiver = DataReceiver.getInstance();
+/*        DataReceiver dataReceiver = DataReceiver.getInstance();
         dataReceiver.getForecastObserver("295954",apiKey).
                 subscribeWith(new DisposableObserver<Forecast>() {
                     @Override
@@ -83,7 +83,7 @@ public class ForecastFragment extends Fragment {
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
 
     @Override

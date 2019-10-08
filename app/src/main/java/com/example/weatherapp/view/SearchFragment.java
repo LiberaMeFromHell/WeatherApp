@@ -1,24 +1,27 @@
 package com.example.weatherapp.view;
 
-
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 
 import com.example.weatherapp.BuildConfig;
 import com.example.weatherapp.R;
+import com.example.weatherapp.model.CitySearchRecyclerAdapter;
 import com.example.weatherapp.model.network.DataReceiver;
 import com.example.weatherapp.model.pojo.citysearch.Location;
-import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -28,8 +31,11 @@ import io.reactivex.observers.DisposableObserver;
  */
 public class SearchFragment extends Fragment {
 
+    private RecyclerView recyclerView;
+    private CitySearchRecyclerAdapter recyclerAdapter;
     private SearchView searchView;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private List<Location> locations;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +43,10 @@ public class SearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        initRecyclerView(view);
+
         searchView = view.findViewById(R.id.searchView);
+
         DataReceiver dataReceiver = DataReceiver.getInstance();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -54,12 +63,12 @@ public class SearchFragment extends Fragment {
                 String apiKey = BuildConfig.ApiKey;
                 if (newText.length() > 2)
                     compositeDisposable.add(
-                            dataReceiver.getCityList(apiKey, "295954")
+                            dataReceiver.getCityList(apiKey, newText)
                                     .subscribeWith(new DisposableObserver<List<Location>>() {
                                         @Override
-                                        public void onNext(List<Location> locations) {
+                                        public void onNext(List<Location> l) {
                                             Log.d("tag", "onViewCreated");
-                                            updateCurrentCondition(locations);
+                                            updateCurrentCondition(l);
                                         }
 
                                         @Override
@@ -79,9 +88,22 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    public void updateCurrentCondition(List<Location> locations) {
-        for (Location l : locations) {
-            Log.d("tag", "updateCurrentCondition: " + l.getLocalizedName());
+    private void updateCurrentCondition(List<Location> l) {
+        locations.clear();
+        locations.addAll(l);
+        recyclerAdapter.notifyDataSetChanged();
+        for (Location i : locations) {
+
+            Log.d("tag", "updateCurrentCondition: " + i.getLocalizedName());
         }
     }
+
+    private void initRecyclerView(View container) {
+        locations = new ArrayList<>();
+        recyclerAdapter = new CitySearchRecyclerAdapter(locations);
+        recyclerView = container.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(recyclerAdapter);
+    }
+
 }

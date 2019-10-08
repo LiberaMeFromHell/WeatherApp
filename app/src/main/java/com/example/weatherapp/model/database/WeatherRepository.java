@@ -1,6 +1,9 @@
 package com.example.weatherapp.model.database;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.weatherapp.model.pojo.citysearch.Location;
 import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
@@ -8,14 +11,24 @@ import com.example.weatherapp.model.pojo.forecast.DailyForecast;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 public class WeatherRepository {
 
     private static WeatherDatabase weatherDatabase;
     private static WeatherRepository weatherRepository;
 
-    public WeatherRepository getInstance(Context context) {
+    private WeatherRepository(Context context) {
+        weatherDatabase = WeatherDatabase.getInstance(context);
+    }
+
+    public static WeatherRepository getInstance(Context context) {
         if (weatherRepository == null) {
-            weatherRepository = new WeatherRepository();
+            weatherRepository = new WeatherRepository(context);
         }
         return weatherRepository;
     }
@@ -42,5 +55,17 @@ public class WeatherRepository {
 
     public static void deleteLocation(String mKey) {
         weatherDatabase.weatherDao().deleteLocation(mKey);
+    }
+
+    public static Flowable<List<Location>> getLocationListObservable() {
+
+        return weatherDatabase.weatherDao().getLocations()
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Flowable<Location> getLocationObservable(String localizedName) {
+        Log.d("tag", "getLocationObservable: " + localizedName);
+        return weatherDatabase.weatherDao().getLocationByName(localizedName)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

@@ -68,10 +68,38 @@ public class CurrentConditionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
+
+    private void updateCurrentCondition(CurrentCondition currentCondition){
+        Log.d("tag", "RealFeel: "+ currentCondition.getRealFeelTemperature()
+                + ", Weather: "+ currentCondition.getWeatherText()
+                + ", Average temperature: "+ currentCondition.getTemperature().getMetric().getValue());
+
+        textCurrentTemperatureMax.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMaximum().getMetric().getValue().toString());
+        textCurrentTemperatureMin.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMinimum().getMetric().getValue().toString());
+        textCurrentTemperatureAverage.setText(currentCondition.getTemperature().getMetric().getValue().toString());
+        textWeather.setText(currentCondition.getWeatherText());
+        textRealFeelTemperature.setText(currentCondition.getRealFeelTemperature().getMetric().getValue().toString());
+        //textHumidity.setText(currentCondition.getRelativeHumidity());
+        textWind.setText(currentCondition.getWind().getSpeed().getMetric().getValue().toString());
+
+        /*iconWeather;
+        iconWind;
+        iconRelativeHumidity;*/
+    }
+
+    void updateData(String locationKey) {
         String apiKey = BuildConfig.ApiKey;
         DataReceiver dataReceiver = DataReceiver.getInstance();
         compositeDisposable.add(
-                dataReceiver.getCurrentConditionObservable("295954",apiKey)
+                dataReceiver.getCurrentConditionObservable(locationKey,apiKey)
                         .subscribeWith(new DisposableObserver<List<CurrentCondition>>() {
                             @Override
                             public void onNext(List<CurrentCondition> currentCondition) {
@@ -90,29 +118,5 @@ public class CurrentConditionFragment extends Fragment {
 
                             }
                         }));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        compositeDisposable.dispose();
-    }
-
-    private void updateCurrentCondition(CurrentCondition currentCondition){
-        Log.d("tag", "RealFeel: "+ currentCondition.getRealFeelTemperature()
-                + ", Weather: "+ currentCondition.getWeatherText()
-                + ", Average temperature: "+ currentCondition.getTemperature().getMetric().getValue());
-
-        textCurrentTemperatureMax.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMaximum().getMetric().getValue().toString());
-        textCurrentTemperatureMin.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMinimum().getMetric().getValue().toString());;
-        textCurrentTemperatureAverage.setText(currentCondition.getTemperature().getMetric().getValue().toString());
-        textWeather.setText(currentCondition.getWeatherText());
-        textRealFeelTemperature.setText(currentCondition.getRealFeelTemperature().getMetric().getValue().toString());
-        //textHumidity.setText(currentCondition.getRelativeHumidity());
-        textWind.setText(currentCondition.getWind().getSpeed().getMetric().getValue().toString());
-
-        /*iconWeather;
-        iconWind;
-        iconRelativeHumidity;*/
     }
 }

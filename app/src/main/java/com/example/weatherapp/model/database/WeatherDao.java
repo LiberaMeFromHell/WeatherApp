@@ -1,5 +1,6 @@
 package com.example.weatherapp.model.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -10,6 +11,8 @@ import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
 import com.example.weatherapp.model.pojo.forecast.DailyForecast;
 
 import java.util.List;
+
+import io.reactivex.Flowable;
 
 @Dao
 public interface WeatherDao {
@@ -34,4 +37,10 @@ public interface WeatherDao {
 
     @Query("DELETE FROM Location WHERE stringKey = :mKey")
     void deleteLocation(String mKey);
+
+    @Query("SELECT * FROM Location")
+    Flowable<List<Location>> getLocations();
+
+    @Query("SELECT * FROM Location WHERE localizedName LIKE :localizedName")
+    Flowable<Location> getLocationByName(String localizedName);
 }

@@ -1,5 +1,6 @@
 package com.example.weatherapp.model;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.model.database.WeatherRepository;
 import com.example.weatherapp.model.pojo.citysearch.Location;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRecyclerAdapter.LocationViewHolder> {
 
     private List<Location> locations;
+    Context context;
+
+    public CitySearchRecyclerAdapter(List<Location> locations) {
+        this.locations = locations;
+    }
 
     @NonNull
     @Override
@@ -25,6 +35,7 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_location_layout, parent,false);
         LocationViewHolder locationViewHolder = new LocationViewHolder(view);
+        context = parent.getContext();
         return locationViewHolder;
     }
 
@@ -36,6 +47,12 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
         holder.getAreaTextView().setText(location.getCountry().getLocalizedName() + " " +
                 location.getCountry().getID() + " " +
                 location.getAdministrativeArea().getLocalizedName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCity(location);
+            }
+        });
     }
 
     @Override
@@ -47,7 +64,6 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
 
         TextView locationTextView;
         TextView areaTextView;
-        String id;
 
         public LocationViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,12 +79,29 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
             return areaTextView;
         }
 
-        public String getId() {
-            return id;
-        }
+    }
+    //TODO: move out from the class
+    private void addCity(Location location) {
+        Observable<Location> observable = Observable
+                .just(location)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io());
+        observable.subscribeWith(new DisposableObserver<Location>() {
+                    @Override
+                    public void onNext(Location location) {
+                        WeatherRepository.insertLocation(location);
+                    }
 
-        public void setId(String id) {
-            this.id = id;
-        }
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 }
