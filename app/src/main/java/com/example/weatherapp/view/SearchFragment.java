@@ -1,30 +1,26 @@
 package com.example.weatherapp.view;
 
 import android.os.Bundle;
-
-import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.Constraints;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.weatherapp.BuildConfig;
 import com.example.weatherapp.R;
 import com.example.weatherapp.model.CitySearchRecyclerAdapter;
-import com.example.weatherapp.model.network.DataReceiver;
 import com.example.weatherapp.model.pojo.citysearch.Location;
+import com.example.weatherapp.viewmodel.WeatherViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
-
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,10 +28,13 @@ import io.reactivex.observers.DisposableObserver;
 public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private CitySearchRecyclerAdapter recyclerAdapter;
     private SearchView searchView;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    private CitySearchRecyclerAdapter recyclerAdapter;
+
     private List<Location> locations;
+
+    private WeatherViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,9 +46,10 @@ public class SearchFragment extends Fragment {
 
         searchView = view.findViewById(R.id.searchView);
 
-        DataReceiver dataReceiver = DataReceiver.getInstance();
+        viewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -60,28 +60,17 @@ public class SearchFragment extends Fragment {
 
                 Log.d("tag", "onQueryTextChange: " + newText);
 
-                String apiKey = BuildConfig.ApiKey;
                 if (newText.length() > 2)
-                    compositeDisposable.add(
-                            dataReceiver.getCityList(apiKey, newText)
-                                    .subscribeWith(new DisposableObserver<List<Location>>() {
-                                        @Override
-                                        public void onNext(List<Location> l) {
-                                            Log.d("tag", "onViewCreated");
-                                            updateCurrentCondition(l);
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            Log.d("tag", "onError" + e);
-                                        }
-
-                                        @Override
-                                        public void onComplete() {
-
-                                        }
-                                    }));
+                    viewModel.findLocations(newText);
                 return false;
+            }
+        });
+
+        viewModel.getFoundLocations().observe(this, new Observer<List<Location>>() {
+
+            @Override
+            public void onChanged(List<Location> foundLocations) {
+                updateCurrentCondition(foundLocations);
             }
         });
 
@@ -100,10 +89,14 @@ public class SearchFragment extends Fragment {
 
     private void initRecyclerView(View container) {
         locations = new ArrayList<>();
-        recyclerAdapter = new CitySearchRecyclerAdapter(locations);
+        recyclerAdapter = new CitySearchRecyclerAdapter(locations,this);
         recyclerView = container.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
+    }
+
+    void insertLocation(Location location) {
+
     }
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.weatherapp.model.pojo.citysearch.Location;
 import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
@@ -13,59 +14,93 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class WeatherRepository {
 
-    private static WeatherDatabase weatherDatabase;
-    private static WeatherRepository weatherRepository;
+    private WeatherDatabase weatherDatabase;
+    private WeatherRepository weatherRepository;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private MutableLiveData<List<Location>> currentLocationsLiveData = new MutableLiveData();
+    private LiveData<List<CurrentCondition>> currentConditionLiveData = new MutableLiveData();
+    private LiveData<List<DailyForecast>> forecastLiveData = new MutableLiveData();
 
-    private WeatherRepository(Context context) {
+    public WeatherRepository(Context context) {
         weatherDatabase = WeatherDatabase.getInstance(context);
+        onObserveLocationList();
     }
 
-    public static WeatherRepository getInstance(Context context) {
-        if (weatherRepository == null) {
-            weatherRepository = new WeatherRepository(context);
-        }
-        return weatherRepository;
-    }
-
-    public static void insertForecast(List<DailyForecast> dailyForecastList) {
+    public void insertForecast(List<DailyForecast> dailyForecastList) {
         weatherDatabase.weatherDao().insertForecast(dailyForecastList);
     }
 
-    public static void deleteForecast() {
+    public void deleteForecast() {
         weatherDatabase.weatherDao().deleteForecast();
     }
 
-    public static void insertCurrentCondition(CurrentCondition currentCondition) {
+    public void insertCurrentCondition(CurrentCondition currentCondition) {
         weatherDatabase.weatherDao().insertCurrentCondition(currentCondition);
     }
 
-    public static void deleteCurrentCondition() {
+    public void deleteCurrentCondition() {
         weatherDatabase.weatherDao().deleteCurrentCondition();
     }
 
-    public static void insertLocation(Location location) {
-        weatherDatabase.weatherDao().insertLocation(location);
+    public void addLocation(Location location) {
+        Observable<Location> observable = Observable
+                .just(location)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io());
+        observable.subscribeWith(new DisposableObserver<Location>() {
+            @Override
+            public void onNext(Location location) {
+                weatherDatabase.weatherDao().insertLocation(location);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
-    public static void deleteLocation(String mKey) {
+    public void deleteLocation(String mKey) {
         weatherDatabase.weatherDao().deleteLocation(mKey);
     }
 
-    public static Flowable<List<Location>> getLocationListObservable() {
-
-        return weatherDatabase.weatherDao().getLocations()
-                .observeOn(AndroidSchedulers.mainThread());
+    public void onObserveLocationList() {
+        compositeDisposable.add(weatherDatabase.weatherDao().getLocations()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new Consumer<List<Location>>() {
+                    @Override
+                    public void accept(List<Location> locations) throws Exception {
+                        currentLocationsLiveData.postValue(locations);
+                    }
+                }));
     }
 
-    public static Flowable<Location> getLocationObservable(String localizedName) {
+    public MutableLiveData<List<Location>> getCurrentLocationsLiveData() {
+        return currentLocationsLiveData;
+    }
+
+    public Flowable<Location> getLocationObservable(String localizedName) {
         Log.d("tag", "getLocationObservable: " + localizedName);
         return weatherDatabase.weatherDao().getLocationByName(localizedName)
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public void onDispose() {
+        //TODO:implement
+        compositeDisposable.dispose();
     }
 }

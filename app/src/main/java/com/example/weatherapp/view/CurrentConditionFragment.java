@@ -11,11 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.weatherapp.BuildConfig;
 import com.example.weatherapp.R;
 import com.example.weatherapp.model.network.DataReceiver;
 import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
+import com.example.weatherapp.model.pojo.forecast.Forecast;
+import com.example.weatherapp.viewmodel.WeatherViewModel;
 
 import java.util.List;
 
@@ -35,6 +39,8 @@ public class CurrentConditionFragment extends Fragment {
     private ImageView iconWeather;
     private ImageView iconWind;
     private ImageView iconRelativeHumidity;
+
+    private WeatherViewModel viewModel;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -62,6 +68,15 @@ public class CurrentConditionFragment extends Fragment {
         iconWind = view.findViewById(R.id.iconWind);
         iconRelativeHumidity = view.findViewById(R.id.iconRelativeHumidity2);
 
+        viewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
+
+        viewModel.getCurrentCondition().observe(this, new Observer<CurrentCondition>() {
+            @Override
+            public void onChanged(CurrentCondition currentCondition) {
+                updateCurrentCondition(currentCondition);
+            }
+        });
+
         return view;
     }
 
@@ -82,41 +97,41 @@ public class CurrentConditionFragment extends Fragment {
                 + ", Weather: "+ currentCondition.getWeatherText()
                 + ", Average temperature: "+ currentCondition.getTemperature().getMetric().getValue());
 
-        textCurrentTemperatureMax.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMaximum().getMetric().getValue().toString());
-        textCurrentTemperatureMin.setText(currentCondition.getTemperatureSummary().getPast6HourRange().getMinimum().getMetric().getValue().toString());
-        textCurrentTemperatureAverage.setText(currentCondition.getTemperature().getMetric().getValue().toString());
+        textCurrentTemperatureMax.setText(""+Math.round(currentCondition.getTemperatureSummary().getPast6HourRange().getMaximum().getMetric().getValue()));
+        textCurrentTemperatureMin.setText(""+Math.round(currentCondition.getTemperatureSummary().getPast6HourRange().getMinimum().getMetric().getValue()));
+        textCurrentTemperatureAverage.setText(""+Math.round(currentCondition.getTemperature().getMetric().getValue()));
         textWeather.setText(currentCondition.getWeatherText());
-        textRealFeelTemperature.setText(currentCondition.getRealFeelTemperature().getMetric().getValue().toString());
+        textRealFeelTemperature.setText(""+Math.round(currentCondition.getRealFeelTemperature().getMetric().getValue()));
         //textHumidity.setText(currentCondition.getRelativeHumidity());
-        textWind.setText(currentCondition.getWind().getSpeed().getMetric().getValue().toString());
+        textWind.setText(""+Math.round(currentCondition.getWind().getSpeed().getMetric().getValue()));
 
         /*iconWeather;
         iconWind;
         iconRelativeHumidity;*/
     }
-
-    void updateData(String locationKey) {
-        String apiKey = BuildConfig.ApiKey;
-        DataReceiver dataReceiver = DataReceiver.getInstance();
-        compositeDisposable.add(
-                dataReceiver.getCurrentConditionObservable(locationKey,apiKey)
-                        .subscribeWith(new DisposableObserver<List<CurrentCondition>>() {
-                            @Override
-                            public void onNext(List<CurrentCondition> currentCondition) {
-                                Log.d("tag", "onViewCreated");
-                                updateCurrentCondition(currentCondition.get(0));
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.d("tag", "onError" + e);
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        }));
-    }
+//
+//    void updateData(String locationKey) {
+//        String apiKey = BuildConfig.ApiKey;
+//        DataReceiver dataReceiver = DataReceiver.getInstance();
+//        compositeDisposable.add(
+//                dataReceiver.getCurrentConditionObservable(locationKey,apiKey)
+//                        .subscribeWith(new DisposableObserver<List<CurrentCondition>>() {
+//                            @Override
+//                            public void onNext(List<CurrentCondition> currentCondition) {
+//                                Log.d("tag", "onViewCreated");
+//                                updateCurrentCondition(currentCondition.get(0));
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.d("tag", "onError" + e);
+//
+//                            }
+//
+//                            @Override
+//                            public void onComplete() {
+//
+//                            }
+//                        }));
+//    }
 }

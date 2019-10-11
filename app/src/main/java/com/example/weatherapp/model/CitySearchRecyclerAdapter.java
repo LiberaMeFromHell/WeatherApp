@@ -1,17 +1,18 @@
 package com.example.weatherapp.model;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapp.R;
-import com.example.weatherapp.model.database.WeatherRepository;
 import com.example.weatherapp.model.pojo.citysearch.Location;
+import com.example.weatherapp.view.SearchFragment;
+import com.example.weatherapp.viewmodel.WeatherViewModel;
 
 
 import java.util.List;
@@ -23,10 +24,12 @@ import io.reactivex.schedulers.Schedulers;
 public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRecyclerAdapter.LocationViewHolder> {
 
     private List<Location> locations;
-    Context context;
+    private WeatherViewModel viewModel;
 
-    public CitySearchRecyclerAdapter(List<Location> locations) {
+    public CitySearchRecyclerAdapter(List<Location> locations, SearchFragment searchFragment) {
         this.locations = locations;
+        viewModel = ViewModelProviders.of(searchFragment).get(WeatherViewModel.class);
+
     }
 
     @NonNull
@@ -35,7 +38,6 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_location_layout, parent,false);
         LocationViewHolder locationViewHolder = new LocationViewHolder(view);
-        context = parent.getContext();
         return locationViewHolder;
     }
 
@@ -50,7 +52,7 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCity(location);
+                viewModel.addLocation(location);
             }
         });
     }
@@ -89,7 +91,6 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
         observable.subscribeWith(new DisposableObserver<Location>() {
                     @Override
                     public void onNext(Location location) {
-                        WeatherRepository.insertLocation(location);
                     }
 
                     @Override
