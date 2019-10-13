@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".view.CurrentConditionFragment"
+    android:background="@color/colorBackgroundWhite"
     android:layout_margin="8dp"
     android:elevation="8dp" >
 
@@ -118,7 +119,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
     <ImageView
-        android:id="@+id/iconRelativeHumidity2"
+        android:id="@+id/iconWeatherDay2"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
@@ -140,7 +141,7 @@
         tools:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/divider"
-        app:layout_constraintStart_toEndOf="@+id/iconRelativeHumidity2"
+        app:layout_constraintStart_toEndOf="@+id/iconWeatherDay2"
         app:layout_constraintTop_toBottomOf="@+id/textRealFeelTemperature" />
 
     <TextView

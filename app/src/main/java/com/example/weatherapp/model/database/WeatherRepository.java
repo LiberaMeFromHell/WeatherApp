@@ -23,7 +23,6 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherRepository {
 
     private WeatherDatabase weatherDatabase;
-    private WeatherRepository weatherRepository;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private MutableLiveData<List<Location>> currentLocationsLiveData = new MutableLiveData();
     private LiveData<List<CurrentCondition>> currentConditionLiveData = new MutableLiveData();

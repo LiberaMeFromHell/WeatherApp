@@ -2,11 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingBottom="12dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -16,7 +19,7 @@
     <FrameLayout
 
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="76dp"
         android:layout_gravity="bottom"
         android:background="@color/colorPrimaryLight"
         android:clickable="true"
@@ -24,15 +27,19 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_height="42dp"
+            android:layout_gravity="top"
             android:layout_marginStart="@dimen/margin_content_start_primary"
             android:clickable="false"
-            android:src="@drawable/baseline_add_white_36" />
+            android:src="@drawable/baseline_add_white_36"/>
 
         <TextView
             android:id="@+id/bottomFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_marginStart="@dimen/margin_content_start_secondary"
             android:gravity="center_vertical"
             android:padding="8dp"

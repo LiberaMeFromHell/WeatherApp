@@ -8,16 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.weatherapp.BuildConfig;
+import com.bumptech.glide.Glide;
 import com.example.weatherapp.R;
-import com.example.weatherapp.model.network.DataReceiver;
-import com.example.weatherapp.model.pojo.currentcondition.CurrentCondition;
 import com.example.weatherapp.model.pojo.forecast.DailyForecast;
 import com.example.weatherapp.model.pojo.forecast.Forecast;
 import com.example.weatherapp.viewmodel.WeatherViewModel;
@@ -28,7 +24,6 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
 
 public class ForecastFragment extends Fragment {
 
@@ -36,13 +31,20 @@ public class ForecastFragment extends Fragment {
     private TextView textForecast2;
     private TextView textForecast3;
 
-    private TextView textForecastTemperature1;
-    private TextView textForecastTemperature2;
-    private TextView textForecastTemperature3;
+    private TextView textForecastTemperatureDay1;
+    private TextView textForecastTemperatureDay2;
+    private TextView textForecastTemperatureDay3;
 
-    private ImageView iconRelativeHumidity1;
-    private ImageView iconRelativeHumidity2;
-    private ImageView iconRelativeHumidity3;
+    private ImageView iconWeatherDay1;
+    private ImageView iconWeatherDay2;
+    private ImageView iconWeatherDay3;
+
+    private ImageView iconWeatherNight1;
+    private ImageView iconWeatherNight2;
+    private ImageView iconWeatherNight3;
+
+
+    private WeatherIcon weatherIcon = new WeatherIcon();
 
     private WeatherViewModel viewModel;
 
@@ -57,13 +59,17 @@ public class ForecastFragment extends Fragment {
         textForecast2 = view.findViewById(R.id.textForecast2);
         textForecast3 = view.findViewById(R.id.textForecast3);
 
-        textForecastTemperature1 = view.findViewById(R.id.textForecastTemperature1);
-        textForecastTemperature2 = view.findViewById(R.id.textForecastTemperature2);
-        textForecastTemperature3 = view.findViewById(R.id.textForecastTemperature3);
+        textForecastTemperatureDay1 = view.findViewById(R.id.textForecastTemperature1);
+        textForecastTemperatureDay2 = view.findViewById(R.id.textForecastTemperature2);
+        textForecastTemperatureDay3 = view.findViewById(R.id.textForecastTemperature3);
 
-        iconRelativeHumidity1 = view.findViewById(R.id.iconRelativeHumidity1);
-        iconRelativeHumidity2 = view.findViewById(R.id.iconRelativeHumidity2);
-        iconRelativeHumidity3 = view.findViewById(R.id.iconRelativeHumidity3);
+        iconWeatherDay1 = view.findViewById(R.id.iconWeatherDay1);
+        iconWeatherDay2 = view.findViewById(R.id.iconWeatherDay2);
+        iconWeatherDay3 = view.findViewById(R.id.iconWeatherDay3);
+
+        iconWeatherNight1 = view.findViewById(R.id.iconWeatherNight1);
+        iconWeatherNight2 = view.findViewById(R.id.iconWeatherNight2);
+        iconWeatherNight3 = view.findViewById(R.id.iconWeatherNight3);
 
         viewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
 
@@ -75,30 +81,6 @@ public class ForecastFragment extends Fragment {
         });
 
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-/*        DataReceiver dataReceiver = DataReceiver.getInstance();
-        dataReceiver.getForecastObserver("295954",apiKey).
-                subscribeWith(new DisposableObserver<Forecast>() {
-                    @Override
-                    public void onNext(Forecast forecast) {
-                        updateCurrentCondition(forecast);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("tag", "Forecast:" + e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });*/
     }
 
     @Override
@@ -119,8 +101,16 @@ public class ForecastFragment extends Fragment {
         textForecast2.setText(new SimpleDateFormat("EEEE").format(new Date(forecast.getDailyForecasts().get(2).getEpochDate()*1000 - milis)));
         textForecast3.setText(new SimpleDateFormat("EEEE").format(new Date(forecast.getDailyForecasts().get(3).getEpochDate()*1000 - milis)));
 
-        textForecastTemperature1.setText(""+Math.round(forecast.getDailyForecasts().get(1).getTemperature().getMaximum().getValue()));
-        textForecastTemperature2.setText(""+Math.round(forecast.getDailyForecasts().get(2).getTemperature().getMaximum().getValue()));
-        textForecastTemperature3.setText(""+Math.round(forecast.getDailyForecasts().get(3).getTemperature().getMaximum().getValue()));
+        textForecastTemperatureDay1.setText(""+Math.round(forecast.getDailyForecasts().get(1).getTemperature().getMaximum().getValue()));
+        textForecastTemperatureDay2.setText(""+Math.round(forecast.getDailyForecasts().get(2).getTemperature().getMaximum().getValue()));
+        textForecastTemperatureDay3.setText(""+Math.round(forecast.getDailyForecasts().get(3).getTemperature().getMaximum().getValue()));
+
+        Glide.with(this).load(weatherIcon.iconPicker(forecast.getDailyForecasts().get(1).getDay().getIcon())).into(iconWeatherDay1);
+        Glide.with(this).load(weatherIcon.iconPicker(forecast.getDailyForecasts().get(2).getDay().getIcon())).into(iconWeatherDay2);
+        Glide.with(this).load(weatherIcon.iconPicker(forecast.getDailyForecasts().get(3).getDay().getIcon())).into(iconWeatherDay3);
+
+        Glide.with(this).load(weatherIcon.iconPicker(forecast.getDailyForecasts().get(1).getNight().getIcon())).into(iconWeatherNight1);
+        Glide.with(this).load(weatherIcon.iconPicker(forecast.getDailyForecasts().get(2).getNight().getIcon())).into(iconWeatherNight2);
+        Glide.with(this).load(weatherIcon.iconPicker(forecast.getDailyForecasts().get(3).getNight().getIcon())).into(iconWeatherNight3);
     }
 }

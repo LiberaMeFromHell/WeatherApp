@@ -5,18 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.example.weatherapp.R;
 import com.example.weatherapp.model.pojo.citysearch.Location;
 import com.example.weatherapp.viewmodel.WeatherViewModel;
@@ -32,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private LinearLayout drawerLinearLayout;
     private WeatherViewModel viewModel;
-    //TODO:rid of
+    private ImageView backgroundView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
+
+        //Making Status Bar and System Bar transparent
+        Window w = getWindow(); // in Activity's onCreate() for instance
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         //TODO: get rid of
 
@@ -50,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-
+        backgroundView = findViewById(R.id.backgroundView);
 
         view = findViewById(R.id.bottomFrameLayout);
         view.setOnClickListener(new View.OnClickListener() {
@@ -62,12 +71,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getBackground().observe(this, new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(List<Integer> integer) {
+                Log.d("Background", "setting bg");
+                Glide.with(MainActivity.this).load(integer.get(0)).centerCrop().into(backgroundView);
+            }
+        });
+
         viewModel.getLocations().observe(this, new Observer<List<Location>>() {
             @Override
             public void onChanged(List<Location> locations) {
+                Log.d("onChanged", "locations");
                 populateNavigationDrawer(locations);
             }
         });
+
     }
 
     @Override
