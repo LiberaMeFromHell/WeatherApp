@@ -28,7 +28,7 @@ public class WeatherViewModel extends AndroidViewModel {
         super(application);
         weatherRepository = new WeatherRepository(getApplication());
         dataReceiver = DataReceiver.getInstance();
-        weatherBackground = new WeatherBackground();
+        weatherBackground = WeatherBackground.getInstance();
     }
 
     public LiveData<List<Location>> getLocations() {
@@ -44,12 +44,10 @@ public class WeatherViewModel extends AndroidViewModel {
     }
 
     public void downloadCurrentCondition(String locationKey) {
-        //TODO: specify a city
         dataReceiver.onObserveCurrentCondition(locationKey);
     }
 
     public void downloadForecast(String locationKey) {
-        //TODO: specify a city
         dataReceiver.onObserveForecast(locationKey);
     }
 

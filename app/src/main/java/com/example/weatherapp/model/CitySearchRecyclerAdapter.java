@@ -82,27 +82,4 @@ public class CitySearchRecyclerAdapter extends RecyclerView.Adapter<CitySearchRe
         }
 
     }
-    //TODO: move out from the class
-    private void addCity(Location location) {
-        Observable<Location> observable = Observable
-                .just(location)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io());
-        observable.subscribeWith(new DisposableObserver<Location>() {
-                    @Override
-                    public void onNext(Location location) {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-    }
 }

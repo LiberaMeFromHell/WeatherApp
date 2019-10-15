@@ -15,12 +15,20 @@ import io.reactivex.observers.DisposableObserver;
 
 public class WeatherBackground {
 
+    private static WeatherBackground weatherBackground;
+
     private MutableLiveData<List<Integer>> backgroundLiveData = new MutableLiveData();
     private List<Integer> list = new ArrayList<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public WeatherBackground() {
-        //backgroundLiveData.postValue(R.drawable.bg_day);
+    private WeatherBackground() {
+
+    }
+
+    public static WeatherBackground getInstance() {
+        if (weatherBackground == null)
+            weatherBackground = new WeatherBackground();
+        return weatherBackground;
     }
 
     public void onObserverBackground(boolean isDay) {
